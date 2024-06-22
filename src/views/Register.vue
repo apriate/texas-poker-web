@@ -1,102 +1,107 @@
 <script setup lang="ts">
-import apis from '@/apis'
-import { ref } from 'vue'
+import { ref, reactive } from 'vue'
+import type { FormInstance, FormRules } from 'element-plus'
 import { useRouter } from 'vue-router'
-
-import XInput from '@/components/XInput.vue'
+import apis from '@/apis'
 
 const router = useRouter()
 
-const form: any = ref({
-  userAccount: '',
+const ruleFormRef = ref<FormInstance>()
+
+const ruleForm = reactive({
+  account: '',
   nickName: '',
   password: '',
   confirm: ''
 })
-let errorData = ref<string[]>([])
 
-const valid = () => {
-  const errorArr: string[] = []
-  for (const formKey in form.value) {
-    if (form.value[formKey] === '') {
-      errorArr.push(formKey)
+// 自定义规则
+// @ts-ignore
+const validatePass = (rule: any, value: any, callback: any) => {
+  if (value === '') {
+    callback(new Error('Please input the password'))
+  } else {
+    if (ruleForm.confirm !== '') {
+      if (!ruleFormRef.value) return
+      ruleFormRef.value.validateField('confirm')
     }
+    callback()
   }
-  // confirm password
-  if (form.value.password !== form.value.confirm) {
-    errorArr.push('confirm')
-    errorArr.push('password')
-  }
-  errorData.value = errorArr
 }
 
-const removeValid = (validName: string) => {
-  errorData.value = errorData.value.join(',').replace(validName, '').split(',')
+// 自定义规则
+// @ts-ignore
+const validatePass2 = (rule: any, value: any, callback: any) => {
+  if (value === '') {
+    callback(new Error('Please input the password again'))
+  } else if (value !== ruleForm.password) {
+    callback(new Error("Two inputs don't match!"))
+  } else {
+    callback()
+  }
 }
 
-const register = async () => {
-  try {
-    valid()
-    if (errorData.value.join('') === '') {
-      await apis.register(form)
-      ElMessage({ type: 'success', message: 'sign successful' })
-      setTimeout(() => {
-        router.replace({ name: 'login' })
-      }, 2000)
+// 表单规则对象
+const rules = ref<FormRules<typeof ruleForm>>({
+  account: [{ required: true, message: 'Please input the account', trigger: 'blur' }],
+  nickName: [{ required: true, message: 'Please input the nickName', trigger: 'blur' }],
+  password: [{ validator: validatePass }],
+  confirm: [{ validator: validatePass2 }]
+})
+
+const register = (formEl: FormInstance | undefined) => {
+  if (!formEl) return
+
+  formEl.validate(async (valid) => {
+    if (valid) {
+      try {
+        await apis.register(ruleForm)
+        ElMessage({ type: 'success', message: 'sign successful' })
+        setTimeout(() => {
+          router.replace({ name: 'login' })
+        }, 2000)
+      } catch (error) {
+        ElMessage({ type: 'error', message: (error as any).message })
+      }
     }
-  } catch (error) {
-    ElMessage({ type: 'error', message: (error as any).message })
-  }
+  })
 }
 </script>
 
 <template>
   <div class="register-container container">
     <div class="register-body">
-      <div class="logo">J-POKER</div>
+      <div class="logo">Texas POKER</div>
       <div class="title">Create Account</div>
-      <div class="user-name">
-        <XInput
-          v-model="form.userAccount"
-          text="account"
-          @focus="removeValid('userAccount')"
-          :error="errorData.indexOf('userAccount') > -1"
-        ></XInput>
-      </div>
-      <div class="user-name">
-        <XInput
-          v-model="form.nickName"
-          text="nickName"
-          @focus="removeValid('nickName')"
-          :error="errorData.indexOf('nickName') > -1"
-        ></XInput>
-      </div>
-      <div class="password">
-        <XInput
-          v-model="form.password"
-          text="password"
-          type="password"
-          @focus="removeValid('password')"
-          :error="errorData.indexOf('password') > -1"
-        ></XInput>
-      </div>
-      <div class="confirm">
-        <XInput
-          v-model="form.confirm"
-          text="confirm"
-          type="password"
-          @focus="removeValid('confirm')"
-          :error="errorData.indexOf('confirm') > -1"
-        ></XInput>
-      </div>
-      <div class="register-btn">
-        <div class="s-btn btn"><span @click="register">submit</span></div>
-      </div>
+      <el-form
+        class="form"
+        ref="ruleFormRef"
+        :model="ruleForm"
+        :rules="rules"
+        label-position="right"
+        label-width="80px"
+      >
+        <el-form-item prop="account" label="account">
+          <el-input v-model="ruleForm.account" clearable />
+        </el-form-item>
+        <el-form-item prop="nickName" label="nickName">
+          <el-input v-model="ruleForm.nickName" clearable />
+        </el-form-item>
+        <el-form-item prop="password" label="password">
+          <el-input v-model="ruleForm.password" type="password" clearable />
+        </el-form-item>
+        <el-form-item prop="confirm" label="confirm">
+          <el-input v-model="ruleForm.confirm" type="password" clearable />
+        </el-form-item>
+        <el-button type="primary" size="large" class="register-btn" @click="register(ruleFormRef)"
+          >submit</el-button
+        >
+      </el-form>
     </div>
   </div>
 </template>
 
-<style scoped>
+<style scoped lang="less">
 .register-container {
   padding: 20px;
   margin: auto;
@@ -110,13 +115,18 @@ const register = async () => {
 
   .title {
     text-align: left;
-    margin-bottom: 5vh;
+    margin-bottom: 3vh;
+  }
+
+  .form {
+    .el-form-item {
+      height: 40px;
+    }
   }
 
   .register-btn {
-    width: 50vw;
-    float: right;
-    margin: auto;
+    background-color: #00976e;
+    width: 100%;
   }
 }
 </style>

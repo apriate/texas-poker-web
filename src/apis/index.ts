@@ -2,20 +2,20 @@ import { request } from '@/utils/request'
 
 export default {
   // 注册
-  register: ({ userAccount = '', password = '', nickName = '' }) => {
+  register: ({ account = '', password = '', nickName = '' }) => {
     return request({
-      url: '/user/register',
+      url: '/auth/register',
       method: 'POST',
-      data: { userAccount, password, nickName }
+      data: { account, password, nickName }
     })
   },
 
   // 登录
-  login: (userAccount: string, password: string) => {
+  login: (account: string, password: string) => {
     return request({
-      url: '/user/login',
+      url: '/auth/login',
       method: 'POST',
-      data: { userAccount, password }
+      data: { account, password }
     })
   },
 

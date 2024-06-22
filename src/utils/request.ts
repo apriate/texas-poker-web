@@ -3,6 +3,8 @@ import domain from './domain'
 import { getToken, removeToken } from './token'
 import router from '@/router'
 
+console.log('XXX --- XXX: ', import.meta.env, domain)
+
 const requestInstance = axios.create({
   baseURL: domain.url,
   timeout: 5000
@@ -28,7 +30,7 @@ requestInstance.interceptors.response.use(
   (error) => {
     console.log(`${error.config.url} 接口请求异常`)
     // token过期
-    if (error.response.status === 401) {
+    if (error.response.status === 4010) {
       removeToken()
       router.replace('/login')
     }

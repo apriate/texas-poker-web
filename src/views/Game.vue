@@ -2,4 +2,4 @@
 
 <template>This is game page</template>
 
-<style scoped></style>
+<style lang="less" scoped></style>

@@ -2,4 +2,4 @@
 
 <template>This is home page</template>
 
-<style scoped></style>
+<style lang="less" scoped></style>

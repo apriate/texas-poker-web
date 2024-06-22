@@ -6,12 +6,12 @@ import { setToken } from '@/utils'
 
 const router = useRouter()
 
-const userAccount = ref('')
+const account = ref('')
 const password = ref('')
 
 const login = async () => {
   try {
-    const result = await apis.login(userAccount.value, password.value)
+    const result = await apis.login(account.value, password.value)
     const { token } = result.data
     setToken(token)
     router.push({ name: 'home' })
@@ -33,7 +33,7 @@ const signUp = () => {
       <div class="user-name input-bd">
         <div class="input-name iconfont icon-account"></div>
         <div class="input-text">
-          <input type="text" v-model="userAccount" />
+          <input type="text" v-model="account" />
         </div>
       </div>
       <div class="password input-bd">
