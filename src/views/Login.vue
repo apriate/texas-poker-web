@@ -21,7 +21,6 @@ const login = async () => {
 }
 
 const signUp = () => {
-  console.log('signUp')
   router.replace({ name: 'register' })
 }
 </script>
@@ -57,8 +56,8 @@ const signUp = () => {
   background-size: 100% 100%;
   width: 100vw;
   height: 100vh;
-  padding: 50vw 0;
   box-sizing: border-box;
+  display: flex;
   .login-body {
     width: 85vw;
     margin: auto;

@@ -61,7 +61,7 @@ const register = (formEl: FormInstance | undefined) => {
           router.replace({ name: 'login' })
         }, 2000)
       } catch (error) {
-        ElMessage({ type: 'error', message: (error as any).message })
+        ElMessage({ type: 'error', message: (error as any).data.msg })
       }
     }
   })

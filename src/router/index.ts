@@ -7,7 +7,6 @@ import Home from '@/views/Home.vue'
 import Game from '@/views/Game.vue'
 
 import apis from '@/apis'
-import cookie from 'js-cookie'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -69,9 +68,10 @@ router.beforeEach(async (to, from, next) => {
     try {
       const result = await apis.checkLogin()
       console.log(result)
-      cookie.set('user_id', result.data.userId)
+      // TODO 获取用户信息放到 pinia
       next()
     } catch (e) {
+      next()
       await router.replace({ name: 'login' })
     }
   } else {
