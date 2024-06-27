@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import apis from '@/apis'
+import service from '@/service'
 import { setToken } from '@/utils'
 
 const router = useRouter()
@@ -11,7 +11,7 @@ const password = ref('')
 
 const login = async () => {
   try {
-    const result = await apis.login(account.value, password.value)
+    const result = await service.login(account.value, password.value)
     const { token } = result.data
     setToken(token)
     router.push({ name: 'home' })

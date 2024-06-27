@@ -1,6 +1,6 @@
 import { computed } from 'vue'
 import { defineStore } from 'pinia'
-import apis from '@/apis'
+import service from '@/service'
 import { getToken } from '@/utils'
 
 export const useUserStore = defineStore('user', () => {
@@ -11,7 +11,7 @@ export const useUserStore = defineStore('user', () => {
   })
 
   const checkLogin = async () => {
-    return await apis.checkLogin()
+    return await service.checkLogin()
   }
 
   return {

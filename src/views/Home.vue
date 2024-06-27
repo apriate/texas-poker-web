@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import { IGameRecord } from '@/interface/IGameRecord'
 import GameRecord from '@/components/GameRecord.vue'
-import apis from '@/apis'
+import service from '@/service'
 import { useRouter } from 'vue-router'
 import cookie from 'js-cookie'
 
@@ -23,7 +23,7 @@ const router = useRouter()
 const createRoom = async () => {
   try {
     // 有效期参数默认设置为3600000
-    const result = await apis.createRoom(isShort.value, smallBlind.value, 360000)
+    const result = await service.createRoom(isShort.value, smallBlind.value, 360000)
     const { roomNumber } = result.data
     const roomConfig = {
       isShort: isShort.value,
@@ -48,7 +48,7 @@ const getRecord = async (index: number) => {
     console.log('ccc')
     let gameId = 0
     if (!index) {
-      const result = await apis.gameRecordList('889008')
+      const result = await service.gameRecordList('889008')
       gameList.value = Object.values(result.data)
       gameId = gameList.value[gameList.value.length - 1].gameId
       currGameIndex.value = gameList.value.length
@@ -58,7 +58,7 @@ const getRecord = async (index: number) => {
     }
     console.log(gameId, 'ccc11')
     gameId = gameList.value[index].gameId
-    const { data } = await apis.commandRecordList('889008', gameId)
+    const { data } = await service.commandRecordList('889008', gameId)
     commandList.value = data.commandList
     showRecord.value = true
     console.log(data)
@@ -70,7 +70,7 @@ const getRecord = async (index: number) => {
 
 const selfPast7DayGame = async () => {
   try {
-    const { data } = await apis.selfPast7DayGame()
+    const { data } = await service.selfPast7DayGame()
     data.forEach((v: IGameRecord) => {
       gameList.value.push({ gameId: v.gameId })
     })
@@ -88,7 +88,7 @@ const go = async () => {
   const number = roomNumber.value
 
   try {
-    const { data } = await apis.findRoom(number)
+    const { data } = await service.findRoom(number)
     if (data) {
       const roomConfig = {
         ...data

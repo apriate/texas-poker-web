@@ -20,7 +20,7 @@ import { ILinkNode, Link } from '@/utils/link'
 import { PokerStyle } from '@/utils/poker-style'
 import domain from '@/utils/domain'
 
-import apis from '@/apis'
+import service from '@/service'
 
 import { IPlayer } from '@/interface/IPlayer'
 import ISit from '@/interface/ISit'
@@ -492,7 +492,7 @@ const getRecord = async (index: number) => {
   try {
     let gameId = 0
     if (!index) {
-      const result = await apis.gameRecordList(roomId.value as string)
+      const result = await service.gameRecordList(roomId.value as string)
       gameList.value = Object.values(result.data)
       gameId = gameList.value[gameList.value.length - 1].gameId
       currGameIndex.value = gameList.value.length
@@ -502,7 +502,7 @@ const getRecord = async (index: number) => {
       gameId = gameList.value[index - 1].gameId
     }
     console.log(gameId, 'ccc11')
-    const { data } = await apis.commandRecordList(roomId.value as string, gameId)
+    const { data } = await service.commandRecordList(roomId.value as string, gameId)
     commandRecordList.value = data.commandList
     showCommandRecord.value = true
     console.log(data)

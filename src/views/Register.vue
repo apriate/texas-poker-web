@@ -2,7 +2,7 @@
 import { ref, reactive } from 'vue'
 import type { FormInstance, FormRules } from 'element-plus'
 import { useRouter } from 'vue-router'
-import apis from '@/apis'
+import service from '@/service'
 
 const router = useRouter()
 
@@ -55,7 +55,7 @@ const register = (formEl: FormInstance | undefined) => {
   formEl.validate(async (valid) => {
     if (valid) {
       try {
-        await apis.register(ruleForm)
+        await service.register(ruleForm)
         ElMessage({ type: 'success', message: 'sign successful' })
         setTimeout(() => {
           router.replace({ name: 'login' })
