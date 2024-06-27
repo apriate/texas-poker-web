@@ -1,12 +1,11 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
+import { useUserStore } from '@/stores/userStore'
 
 // 导入页面
 import Register from '@/views/Register.vue'
 import Login from '@/views/Login.vue'
 import Home from '@/views/Home.vue'
 import Game from '@/views/Game.vue'
-
-import apis from '@/apis'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -58,17 +57,17 @@ const router = createRouter({
 
 // @ts-ignore
 router.beforeEach(async (to, from, next) => {
+  const userStore = useUserStore()
+
   // 设置title
   if (to.meta.title) {
     document.title = to.meta.title as string
   }
 
   // 登录拦截
-  if (to.meta.needLogin) {
+  if (to.meta.needLogin && !userStore.isLogin) {
     try {
-      const result = await apis.checkLogin()
-      console.log(result)
-      // TODO 获取用户信息放到 pinia
+      await userStore.checkLogin()
       next()
     } catch (e) {
       next()

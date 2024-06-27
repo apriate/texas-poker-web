@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "start": "vite --host 0.0.0.0",
     "build": "vue-tsc && vite build",
     "preview": "vite preview",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
@@ -15,12 +16,14 @@
     "element-plus": "^2.7.5",
     "js-cookie": "^3.0.5",
     "pinia": "^2.1.7",
+    "socket.io-client": "^4.7.5",
     "vue": "^3.4.21",
     "vue-router": "^4.3.3"
   },
   "devDependencies": {
     "@types/js-cookie": "^3.0.6",
     "@types/node": "^20.14.6",
+    "@types/socket.io-client": "^3.0.0",
     "@vitejs/plugin-vue": "^5.0.4",
     "@vue/eslint-config-prettier": "^9.0.0",
     "eslint": "^9.5.0",

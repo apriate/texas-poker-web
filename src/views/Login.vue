@@ -16,7 +16,7 @@ const login = async () => {
     setToken(token)
     router.push({ name: 'home' })
   } catch (e) {
-    ElMessage({ type: 'error', message: 'Wrong password or account.' })
+    ElMessage({ type: 'error', message: 'Wrong password or account' })
   }
 }
 

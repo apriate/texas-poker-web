@@ -21,10 +21,14 @@ export default defineConfig({
   ],
   // 配置别名
   resolve: {
-    open: true,
     alias: {
       '@': path.resolve(__dirname, './src')
     }
+  },
+  server: {
+    open: true,
+    port: 5173,
+    host: '0.0.0.0'
   },
   css: {
     preprocessorOptions: {

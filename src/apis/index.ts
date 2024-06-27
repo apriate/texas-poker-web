@@ -73,11 +73,10 @@ export default {
   },
 
   // 近7天手牌记录
-  selfPast7DayGame: (userID: number) => {
+  selfPast7DayGame: () => {
     return request({
       url: '/game/record/find/selfPast7DayGame',
-      method: 'POST',
-      data: { userID }
+      method: 'POST'
     })
   }
 }
