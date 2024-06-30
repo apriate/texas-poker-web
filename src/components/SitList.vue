@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted, ref, watch, computed, type PropType } from 'vue'
 
-import cardList from '@/components/CardList.vue'
+import CardList from '@/components/CardList.vue'
 import BuyIn from '@/components/BuyIn.vue'
 
 import { ILinkNode } from '@/utils/link'
@@ -210,10 +210,10 @@ onMounted(() => {
                   sit.player.handCard.length !== 0)
               "
             >
-              <cardList
+              <CardList
                 :cardList="sit.player.handCard as string[]"
                 :valueCards="valueCards!"
-              ></cardList>
+              ></CardList>
             </div>
             <div
               class="card-style"

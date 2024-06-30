@@ -3,7 +3,6 @@ import { ref, computed, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 import io from 'socket.io-client'
-import cookie from 'js-cookie'
 
 import SitList from '@/components/SitList.vue'
 import CommonCard from '@/components/CommonCard.vue'
@@ -19,6 +18,7 @@ import GameRecord from '@/components/GameRecord.vue'
 import { ILinkNode, Link } from '@/utils/link'
 import { PokerStyle } from '@/utils/poker-style'
 import domain from '@/utils/domain'
+import { getRoomConfig, getToken } from '@/utils/token'
 
 import service from '@/service'
 
@@ -256,16 +256,15 @@ const action = (command: string) => {
 }
 
 const socketInit = () => {
-  const token = cookie.get('token') || localStorage.getItem('token') || ''
-  const roomConfigStore = cookie.get('roomConfig') || localStorage.getItem('roomConfig') || ''
+  const token = getToken()
+  const roomConfigStore = getRoomConfig()
   roomConfig.value = JSON.parse(roomConfigStore)
-  console.log(JSON.parse(roomConfigStore), 'roomConfigStore')
   socket.value = io(`${domain.url}/socket`, {
     // 实际使用中可以在这里传递参数
     query: {
-      room: roomId.value,
+      roomNumber: roomId.value,
       token,
-      roomConfigStore
+      roomConfig: roomConfigStore
     },
     transports: ['websocket']
   })

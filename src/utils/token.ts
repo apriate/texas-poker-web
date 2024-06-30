@@ -1,16 +1,46 @@
-// 用户token封装
-const TOKENKEY = 'token'
+import cookie from 'js-cookie'
+
+enum KeyEnum {
+  TOKENKEY = 'token', // 用户token
+  ROOMCONFIGKEY = 'roomConfig' // 房间配置
+}
+
+const getKey = (key: KeyEnum) => {
+  return cookie.get(key) || localStorage.getItem(key) || ''
+}
+
+const removeKey = (key: KeyEnum) => {
+  cookie.remove(key)
+  localStorage.removeItem(key)
+}
+
+const setKey = (key: KeyEnum, value: string) => {
+  cookie.set(key, value, { expires: 1 })
+  localStorage.setItem(key, value)
+}
 
 const getToken = () => {
-  return localStorage.getItem(TOKENKEY)
+  return getKey(KeyEnum.TOKENKEY)
 }
 
 const setToken = (token: string) => {
-  localStorage.setItem(TOKENKEY, token)
+  setKey(KeyEnum.TOKENKEY, token)
 }
 
 const removeToken = () => {
-  localStorage.removeItem(TOKENKEY)
+  removeKey(KeyEnum.TOKENKEY)
 }
 
-export { getToken, setToken, removeToken }
+const getRoomConfig = () => {
+  return getKey(KeyEnum.ROOMCONFIGKEY)
+}
+
+const setRoomConfig = (roomConfig: string) => {
+  setKey(KeyEnum.ROOMCONFIGKEY, roomConfig)
+}
+
+const removeRoomConfig = () => {
+  removeKey(KeyEnum.ROOMCONFIGKEY)
+}
+
+export { KeyEnum, getToken, setToken, removeToken, getRoomConfig, setRoomConfig, removeRoomConfig }

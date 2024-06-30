@@ -43,7 +43,7 @@ const changeRange = (val: string) => {
   const valNum = Number(val)
   const size =
     Number(val) === 0 ? props.min : Math.floor((valNum / 100) * (props.max - props.min)) + props.min
-  console.log('size', size)
+  // console.log('size', size)
   emit('update', size)
   emit('input', size)
 }
@@ -68,8 +68,8 @@ onMounted(() => {
         type="range"
         v-model="rangeSize"
         :class="{ horizontal: !!isHorizontal }"
-        @input="changeRange(($event!.target as any).value)"
-        @change="changeRange(($event!.target as any).value)"
+        @input="changeRange(($event.target as any).value)"
+        @change="changeRange(($event.target as any).value)"
       />
     </div>
   </div>

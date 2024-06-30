@@ -1,7 +1,7 @@
 import { computed } from 'vue'
 import { defineStore } from 'pinia'
 import service from '@/service'
-import { getToken } from '@/utils'
+import { getToken } from '@/utils/token'
 
 export const useUserStore = defineStore('user', () => {
   const isLogin = computed(() => {

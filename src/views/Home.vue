@@ -4,7 +4,7 @@ import { IGameRecord } from '@/interface/IGameRecord'
 import GameRecord from '@/components/GameRecord.vue'
 import service from '@/service'
 import { useRouter } from 'vue-router'
-import cookie from 'js-cookie'
+import { setRoomConfig } from '@/utils/token'
 
 const roomNumber = ref()
 const isJoin = ref(false)
@@ -30,7 +30,7 @@ const createRoom = async () => {
       smallBlind: smallBlind.value
     }
 
-    localStorage.setItem('roomConfig', JSON.stringify(roomConfig))
+    setRoomConfig(JSON.stringify(roomConfig))
     router.push({ name: 'game', params: { roomNumber, isOwner: '1' } })
   } catch (e) {
     console.log(e)
@@ -91,10 +91,11 @@ const go = async () => {
     const { data } = await service.findRoom(number)
     if (data) {
       const roomConfig = {
-        ...data
+        isShort: isShort.value,
+        smallBlind: smallBlind.value
       }
 
-      cookie.set('roomConfig', roomConfig, { expires: 1 })
+      setRoomConfig(JSON.stringify(roomConfig))
       router.push({ name: 'game', params: { roomNumber: number } })
     } else {
       ElMessage({ type: 'error', message: 'can`t find the room' })

@@ -22,7 +22,6 @@ declare module 'vue' {
     MsgList: typeof import('./src/components/MsgList.vue')['default']
     Notice: typeof import('./src/components/Notice.vue')['default']
     Player: typeof import('./src/components/Player.vue')['default']
-    'Player copy': typeof import('./src/components/Player copy.vue')['default']
     Range: typeof import('./src/components/Range.vue')['default']
     Record: typeof import('./src/components/Record.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']

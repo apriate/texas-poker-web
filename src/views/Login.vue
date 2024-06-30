@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import service from '@/service'
-import { setToken } from '@/utils'
+import { setToken } from '@/utils/token'
 
 const router = useRouter()
 

@@ -1,6 +1,6 @@
 import axios from 'axios'
-import domain from './domain'
-import { getToken, removeToken } from './token'
+import domain from '@/utils/domain'
+import { getToken, removeToken } from '@/utils/token'
 import router from '@/router'
 
 const requestInstance = axios.create({
