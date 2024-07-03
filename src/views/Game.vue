@@ -442,7 +442,7 @@ const standUp = () => {
     ElMessage('sorry, please fold you hand!')
     return
   }
-  isPlay.value && emit('standUp')
+  emit('standUp')
   showSetting.value = false
 }
 
