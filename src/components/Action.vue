@@ -207,8 +207,8 @@ const showActionBtn = (type: string) => {
             :max="currPlayer && currPlayer.counter"
             :min="0"
             :is-horizontal="true"
-            v-model="raiseSize"
-            @change="getActionSize"
+            :buyInSize="raiseSize"
+            @update="getActionSize"
           ></Range>
           <div class="btn" @click="addSize">ok</div>
         </div>

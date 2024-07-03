@@ -43,7 +43,7 @@ const changeRange = (val: string) => {
   const valNum = Number(val)
   const size =
     Number(val) === 0 ? props.min : Math.floor((valNum / 100) * (props.max - props.min)) + props.min
-  // console.log('size', size)
+  console.log('size', size)
   emit('update', size)
   emit('input', size)
 }

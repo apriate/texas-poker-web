@@ -59,9 +59,12 @@ const sitLinkNode = ref<any>('')
 const showBuyIn = ref(false)
 const currSit = ref<ISit>()
 
-watch(props.sitLink, (val: ILinkNode<ISit>) => {
-  sitLinkNode.value = val
-})
+watch(
+  () => props.sitLink,
+  (val: ILinkNode<ISit>) => {
+    sitLinkNode.value = val
+  }
+)
 
 const buyIn = (size: number) => {
   showBuyIn.value = false

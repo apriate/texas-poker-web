@@ -128,6 +128,10 @@ const gamePlayers = computed(() => {
   return sitList.value.filter((s) => s.player && s.player.status === 1)
 })
 
+const sitPlayers = computed(() => {
+  return sitList.value.filter((s) => s.player && s.player.userId)
+})
+
 const hasSit = computed(() => {
   return !!sitList.value.find((s) => s.player && s.player.userId === currPlayer.value?.userId)
 })
@@ -262,7 +266,7 @@ const socketInit = () => {
   socket.value = io(`${domain.url}/socket`, {
     // 实际使用中可以在这里传递参数
     query: {
-      roomNumber: roomId.value,
+      room: roomId.value,
       token,
       roomConfig: roomConfigStore
     },
@@ -408,9 +412,9 @@ const socketInit = () => {
     console.log('#disconnecting')
   })
 
-  socket.value.on('error', () => {
+  socket.value.on('error', (error: IMsg) => {
     ElMessage('room is error')
-    console.log('#error')
+    console.log('#error', error.message)
   })
 }
 
@@ -438,7 +442,7 @@ const standUp = () => {
     ElMessage('sorry, please fold you hand!')
     return
   }
-  emit('standUp')
+  isPlay.value && emit('standUp')
   showSetting.value = false
 }
 
@@ -447,10 +451,11 @@ const closeAudio = () => {
 }
 
 const play = () => {
-  if (players.value.length >= 2) {
+  if (sitPlayers.value.length >= 2) {
     gaming.value = true
     emit('playGame')
   } else {
+    ElMessage('no enough player')
     console.log('no enough player')
   }
 }
