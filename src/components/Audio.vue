@@ -41,10 +41,12 @@ onBeforeUpdate(() => {
 
 <template>
   <div class="audio-container">
-    <audio v-for="(item, i) in list" :key="i" :ref="setRef" controls>
-      <source :src="requireAudio(`${item}.mp3`)" type="audio/mpeg" />
-      Your browser does not support the audio element.
-    </audio>
+    <template v-for="(item, i) in list" :key="i">
+      <audio v-if="item === props.type" :ref="setRef" controls>
+        <source :src="requireAudio(`${item}.mp3`)" type="audio/mpeg" />
+        Your browser does not support the audio element.
+      </audio>
+    </template>
   </div>
 </template>
 
