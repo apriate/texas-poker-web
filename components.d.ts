@@ -13,7 +13,6 @@ declare module 'vue' {
     CardList: typeof import('./src/components/CardList.vue')['default']
     CardStyle: typeof import('./src/components/CardStyle.vue')['default']
     CommonCard: typeof import('./src/components/CommonCard.vue')['default']
-    copy: typeof import('./src/components/Player copy.vue')['default']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElForm: typeof import('element-plus/es')['ElForm']
     ElFormItem: typeof import('element-plus/es')['ElFormItem']
