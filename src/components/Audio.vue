@@ -4,7 +4,7 @@ import { watch, ref, onBeforeUpdate } from 'vue'
 const props = defineProps({
   type: {
     type: String,
-    default: ''
+    default: 'click'
   },
   play: {
     type: Boolean,
@@ -27,7 +27,7 @@ watch(
   (val: boolean) => {
     if (val) {
       const index = list.value.findIndex((item) => item === props.type)
-      const audio = audioRefs.value[index!]
+      const audio = audioRefs.value[index]
       audio.play()
     }
   }
@@ -41,12 +41,10 @@ onBeforeUpdate(() => {
 
 <template>
   <div class="audio-container">
-    <template v-for="(item, i) in list" :key="i">
-      <audio v-if="item === props.type" :ref="setRef" controls>
-        <source :src="requireAudio(`${item}.mp3`)" type="audio/mpeg" />
-        Your browser does not support the audio element.
-      </audio>
-    </template>
+    <audio v-for="(item, i) in list" :key="i" :ref="setRef" controls>
+      <source :src="requireAudio(`${item}.mp3`)" type="audio/mpeg" />
+      Your browser does not support the audio element.
+    </audio>
   </div>
 </template>
 
