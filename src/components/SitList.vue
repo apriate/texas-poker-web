@@ -77,7 +77,7 @@ const showHandCard = (sit: ISit) => {
   return sit.player?.userId === props.currPlayer?.userId
 }
 
-const PokeStyle = (cards: string[]) => {
+const PokeStyle = (cards?: string[]) => {
   if (props.commonCard.length === 0) {
     return ''
   }
@@ -246,7 +246,7 @@ onMounted(() => {
             </div>
             <div class="ready" v-show="handCard && handCard.length === 0">ready</div>
             <div class="card-style" v-if="commonCard && commonCard.length > 0">
-              {{ PokeStyle([]) }}
+              {{ PokeStyle() }}
             </div>
           </div>
           <div class="win" v-show="sit.player.income">
